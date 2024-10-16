@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+body {
+	margin-left : 210px;
+}
+
+table tr th{
+	width : 50px;
+	height : 25px;
+}
+
+#FnickName, #rating {
+	width : 100px;
+}
