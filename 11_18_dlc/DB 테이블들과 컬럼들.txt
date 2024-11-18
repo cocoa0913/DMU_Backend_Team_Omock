@@ -1,0 +1,67 @@
+users
+{
+    user_code INT AUTO_INCREMENT PRIMARY KEY,  -- 회원 고유 코드
+    id VARCHAR(50) NOT NULL UNIQUE,            -- 회원 ID (유니크)
+    password VARCHAR(255) NOT NULL,            -- 암호화된 비밀번호
+    nickname VARCHAR(50) NOT NULL UNIQUE,      -- 닉네임 (유니크)
+    win_count INT DEFAULT 0,                   -- 이긴 횟수
+    lose_count INT DEFAULT 0,                  -- 진 횟수
+    level INT DEFAULT 1,                       -- 레벨
+    experience INT DEFAULT 0,                  -- 경험치
+    cash INT DEFAULT 0,                        -- 보유 캐쉬
+    icon_code INT DEFAULT 1,                   -- 아이콘 코드 (기본 아이콘) -->icons에서 외래키 받아오게 변경
+    ads_removed BOOLEAN DEFAULT FALSE,         -- 광고 제거 여부 (초기값: 제거되지 않음)
+    admin_rights BOOLEAN DEFAULT FALSE   
+}
+rooms
+{
+   room_id INT AUTO_INCREMENT PRIMARY KEY,    -- 방 고유 ID
+    room_title VARCHAR(100) NOT NULL,          -- 방 제목
+    room_password VARCHAR(50),                 -- 방 비밀번호 (NULL 가능)
+    owner_code INT NOT NULL,                   -- 방 주인 (FK, users 테이블 참조)
+    is_private BOOLEAN DEFAULT FALSE,          -- 비밀번호 유무
+    FOREIGN KEY (owner_code) REFERENCES users(user_code)
+}
+game_logs 
+{
+    game_id INT AUTO_INCREMENT PRIMARY KEY,    -- 대전 고유 ID
+    player1_code INT NOT NULL,                 -- 플레이어1 (FK, users 테이블 참조)
+    player2_code INT NOT NULL,                 -- 플레이어2 (FK, users 테이블 참조)
+    winner_code INT NOT NULL,                  -- 승자 (FK, users 테이블 참조)
+    loser_code INT NOT NULL,                   -- 패자 (FK, users 테이블 참조)
+    game_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 대전 일시
+    FOREIGN KEY (player1_code) REFERENCES users(user_code),
+    FOREIGN KEY (player2_code) REFERENCES users(user_code),
+    FOREIGN KEY (winner_code) REFERENCES users(user_code),
+    FOREIGN KEY (loser_code) REFERENCES users(user_code)
+}
+
+items (
+    item_code INT AUTO_INCREMENT PRIMARY KEY,  -- 아이템 고유 코드
+    item_name VARCHAR(100) NOT NULL,           -- 아이템 이름
+    price INT NOT NULL,                        -- 아이템 가격 (캐쉬)
+    image VARCHAR(255)                         -- 아이템 이미지 경로 (NULL 가능)
+)
+
+user_items (
+    user_code INT NOT NULL,                    -- 유저 코드 (FK, users 테이블 참조)
+    item_code INT NOT NULL,                    -- 아이템 코드 (FK, items 테이블 참조)
+    acquired_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 획득 날짜
+    PRIMARY KEY (user_code, item_code),
+    FOREIGN KEY (user_code) REFERENCES users(user_code),
+    FOREIGN KEY (item_code) REFERENCES items(item_code)
+)
+
+friends (
+    user_code INT NOT NULL,                    -- 유저 코드 (FK, users 테이블 참조)
+    friend_code INT NOT NULL,                  -- 친구 유저 코드 (FK, users 테이블 참조)
+    status VARCHAR(10) DEFAULT 'pending',      -- 친구 요청 상태 ('pending', 'accepted')
+    PRIMARY KEY (user_code, friend_code),
+    FOREIGN KEY (user_code) REFERENCES users(user_code),
+    FOREIGN KEY (friend_code) REFERENCES users(user_code)
+)
+
+icons (
+    icon_code INT PRIMARY KEY AUTO_INCREMENT,
+    icon_img BLOB NOT NULL
+)

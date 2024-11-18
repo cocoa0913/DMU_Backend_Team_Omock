@@ -1,0 +1,23 @@
+page들
+
+1. login
+-users
+2. main
+-users
+-items(인데 users의 item)
+3. menu
+
+4. 방 만들기
+
+5. 방 찾기
+
+6. 대기실
+
+7. 게임방
+
+8. 캐쉬샵
+
+9. 마이페이지
+
+10. 친구목록
+
