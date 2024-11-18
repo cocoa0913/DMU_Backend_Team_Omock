@@ -1,0 +1,67 @@
+/* 캐쉬샵 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.PageReturn a{
+	top : 20px;
+	left : 20px;
+	position : fixed;
+	display: inline-block;
+    margin: 20px 0;
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.PageReturn a:hover {
+    background-color: #45a049;
+}
+
+.content {
+    margin-left: 0px;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+    text-align : center;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+}
+
+table {
+    width: 85%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+input[type="submit"] {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
