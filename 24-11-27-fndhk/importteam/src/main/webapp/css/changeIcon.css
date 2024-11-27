@@ -10,7 +10,7 @@ h2, h3 {
 }
 
 .content {
-    max-width: 800px;
+    max-width: 500px;
     margin: 20px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -18,15 +18,34 @@ h2, h3 {
     border-radius: 5px;
 }
 
-.current-icon-container, .icon-list {
+.current-icon {
     text-align: center;
     margin-bottom: 20px;
+}
+
+.icon-list {
+	text-align: right;
+	display : flex;
+	justify-content: center;
+	margin-bottom : 50px;
+}
+
+
+input[type="radio"] {
+	position : relative;
+	display : none;
+	top : 0px;
+	right : 45px;
 }
 
 img {
     margin: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+img:hover {
+	cursor: pointer;
 }
 
 table {
@@ -54,19 +73,5 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-.PageReturn a {
-    display: inline-block;
-    margin: 20px 0;
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-}
-
-.PageReturn a:hover {
     background-color: #45a049;
 }
