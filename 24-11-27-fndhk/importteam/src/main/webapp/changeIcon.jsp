@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>아이콘 변경</title>
     <link rel="stylesheet" type="text/css" href="css/changeIcon.css">
+    
+    <script src="script/iconImg.js"></script>
 </head>
 <body>
     <div class="content">
@@ -21,6 +23,7 @@
 
             if (userCode == null || levelParam == null || cashParam == null) {
                 response.sendRedirect("main.jsp");
+                System.out.println("아나");
                 return;
             }
 
@@ -82,7 +85,7 @@
         <!-- 현재 아이콘 -->
         <div class="current-icon">
             <h3>현재 아이콘</h3>
-            <img src="<%= currentIcon %>" alt="현재 아이콘" width="80" height="80">
+            <img id="currentIconImage" src="<%= currentIcon %>" alt="현재 아이콘" width="80" height="80">
         </div>
 
         <!-- 보유 아이콘 목록 -->
@@ -101,22 +104,17 @@
                 %>
                 <div class="icon-item">
                     <label>
-                        <input type="radio" name="iconCode" value="<%= iconCode %>"
-                            <% if (a == 1) { %>checked<% } %>>
+                        <input type="radio" name="iconCode" class="iconradio" value="<%= iconCode %>"
+                            data-img-src="<%= iconImg %>" onclick="submitForm('<%= iconImg %>', '<%= iconCode %>')">
                         <img src="<%= iconImg %>" alt="아이콘" width="80" height="80">
                     </label>
                 </div>
                 <% } %>
-            </div>
-            <div class="submit-button">
-                <input type="submit" value="아이콘 변경">
+                <div class="PageReturn">
+                	<input type="submit" value="완료">
+        		</div>
             </div>
         </form>
-
-        <!-- 돌아가기 버튼 -->
-        <div class="PageReturn">
-            <a href="main.jsp?userCode=<%= userCode %>&nickname=<%= nickname %>&level=<%= levelParam %>&cash=<%= cashParam %>">돌아가기</a>
-        </div>
     </div>
 </body>
 </html>
