@@ -1,0 +1,181 @@
+CREATE DATABASE gomoku_db;
+USE gomoku_db;
+CREATE TABLE users (
+    user_code INT AUTO_INCREMENT PRIMARY KEY,  -- 회원 고유 코드
+    id VARCHAR(50) NOT NULL UNIQUE,            -- 회원 ID (유니크)
+    password VARCHAR(255) NOT NULL,            -- 암호화된 비밀번호
+    nickname VARCHAR(50) NOT NULL UNIQUE,      -- 닉네임 (유니크)
+    win_count INT DEFAULT 0,                   -- 이긴 횟수
+    lose_count INT DEFAULT 0,                  -- 진 횟수
+    level INT DEFAULT 1,                       -- 레벨
+    experience INT DEFAULT 0,                  -- 경험치
+    cash INT DEFAULT 0,                        -- 보유 캐쉬
+    icon_code INT DEFAULT 1,                   -- 아이콘 코드 (기본 아이콘)
+    ads_removed BOOLEAN DEFAULT FALSE,         -- 광고 제거 여부 (초기값: 제거되지 않음)
+    admin_rights BOOLEAN DEFAULT FALSE         -- 관리자 권한 여부
+);
+select * from users;
+ALTER TABLE users ADD COLUMN sword_level INT DEFAULT 0;
+CREATE TABLE rooms (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,    -- 방 고유 ID
+    room_title VARCHAR(100) NOT NULL,          -- 방 제목
+    room_password VARCHAR(50),                 -- 방 비밀번호 (NULL 가능)
+    owner_code INT NOT NULL,                   -- 방 주인 (FK, users 테이블 참조)
+    is_private BOOLEAN DEFAULT FALSE,          -- 비밀번호 유무
+    FOREIGN KEY (owner_code) REFERENCES users(user_code)
+);
+CREATE TABLE game_logs (
+    game_id INT AUTO_INCREMENT PRIMARY KEY,    -- 대전 고유 ID
+    player1_code INT NOT NULL,                 -- 플레이어1 (FK, users 테이블 참조)
+    player2_code INT NOT NULL,                 -- 플레이어2 (FK, users 테이블 참조)
+    winner_code INT NOT NULL,                  -- 승자 (FK, users 테이블 참조)
+    loser_code INT NOT NULL,                   -- 패자 (FK, users 테이블 참조)
+    game_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 대전 일시
+    FOREIGN KEY (player1_code) REFERENCES users(user_code),
+    FOREIGN KEY (player2_code) REFERENCES users(user_code),
+    FOREIGN KEY (winner_code) REFERENCES users(user_code),
+    FOREIGN KEY (loser_code) REFERENCES users(user_code)
+);
+CREATE TABLE items (
+    item_code INT AUTO_INCREMENT PRIMARY KEY,  -- 아이템 고유 코드
+    item_name VARCHAR(100) NOT NULL,           -- 아이템 이름
+    price INT NOT NULL,                        -- 아이템 가격 (캐쉬)
+    image VARCHAR(255)                         -- 아이템 이미지 경로 (NULL 가능)
+);
+select * from items;
+CREATE TABLE user_items (
+    user_code INT NOT NULL,                    -- 유저 코드 (FK, users 테이블 참조)
+    item_code INT NOT NULL,                    -- 아이템 코드 (FK, items 테이블 참조)
+    acquired_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 획득 날짜
+    PRIMARY KEY (user_code, item_code),
+    FOREIGN KEY (user_code) REFERENCES users(user_code),
+    FOREIGN KEY (item_code) REFERENCES items(item_code)
+);
+select * from user_items;
+delete from user_items where user_code=4 && item_code = 2;
+CREATE TABLE friends (
+    user_code INT NOT NULL,                    -- 유저 코드 (FK, users 테이블 참조)
+    friend_code INT NOT NULL,                  -- 친구 유저 코드 (FK, users 테이블 참조)
+    status VARCHAR(10) DEFAULT 'pending',      -- 친구 요청 상태 ('pending', 'accepted')
+    PRIMARY KEY (user_code, friend_code),
+    FOREIGN KEY (user_code) REFERENCES users(user_code),
+    FOREIGN KEY (friend_code) REFERENCES users(user_code)
+);
+select * from friends;
+DELETE FROM friends WHERE user_code = 1 AND friend_code = 4;
+CREATE TABLE admin_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,     -- 로그 고유 ID
+    admin_code INT NOT NULL,                   -- 관리자 코드 (FK, users 테이블 참조)
+    action VARCHAR(255) NOT NULL,              -- 관리자 활동 내용
+    action_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 활동 시간
+    FOREIGN KEY (admin_code) REFERENCES users(user_code)
+);
+CREATE TABLE login_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,     -- 로그 고유 ID
+    user_code INT NOT NULL,                    -- 사용자 코드 (FK, users 테이블 참조)
+    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 로그인 시간
+    FOREIGN KEY (user_code) REFERENCES users(user_code)
+);
+CREATE TABLE icons (
+    icon_code INT PRIMARY KEY AUTO_INCREMENT,
+    icon_img BLOB NOT NULL
+);
+select * from icons;
+
+/*--------------------------------------------------------------------------------------*/
+ALTER TABLE users
+ADD CONSTRAINT fk_icon_code
+FOREIGN KEY (icon_code) REFERENCES icons(icon_code);
+
+ALTER TABLE rooms ADD COLUMN participant_code INT DEFAULT NULL;
+
+alter table rooms convert to charset utf8mb4;
+select * from rooms;
+/*----------------------------------------------------------------------------------------*/
+SELECT u.user_code, u.icon_code, i.icon_img
+FROM users u
+LEFT JOIN icons i ON u.icon_code = i.icon_code;
+UPDATE users
+SET icon_code = 1
+WHERE icon_code NOT IN (SELECT icon_code FROM icons);
+
+
+
+-- 암호화된 비밀번호는 나중에 적용할 수 있지만, 지금은 간단한 비밀번호로 설정
+INSERT INTO users (id, password, nickname, win_count, lose_count, level, experience, cash, icon_code, ads_removed, admin_rights)
+VALUES ('admin1', 'admin123', 'Admin', 0, 0, 1, 0, 0, 1, FALSE, TRUE);
+
+
+select * from users;
+select * from items;
+CREATE TABLE game_records (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_name VARCHAR(50) NOT NULL,
+    winner VARCHAR(50) NOT NULL,
+    loser VARCHAR(50) NOT NULL,
+    duration INT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE users MODIFY COLUMN icon_code INT DEFAULT 1;
+
+select * from user_items;
+
+
+
+INSERT INTO users (id, password, nickname, win_count, lose_count, level, experience, cash, icon_code, ads_removed, admin_rights)
+VALUES ('super', 'super', 'super', 0, 0, 99, 0, 999999, 1, FALSE, TRUE);
+use gomoku_db;
+select * from users;
+
+SET SQL_SAFE_UPDATES = 0;
+ALTER TABLE items DROP COLUMN image;
+ALTER TABLE items ADD COLUMN image_data BLOB;
+DELETE FROM items;
+SHOW VARIABLES LIKE 'secure_file_priv';
+SELECT LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon4.png');
+
+
+INSERT INTO icons (icon_code, icon_img) VALUES ('1', LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon.png'));
+INSERT INTO items (item_code, item_name, price, image_data) 
+VALUES (1,'default icon', 0, LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon.png'));
+UPDATE users SET icon_code = 1 WHERE icon_code IS NULL;
+INSERT INTO user_items (user_code, item_code)
+SELECT user_code, 1 FROM users
+ON DUPLICATE KEY UPDATE item_code = item_code;
+ALTER TABLE users ALTER COLUMN icon_code SET DEFAULT 1;
+INSERT INTO icons (icon_code, icon_img) VALUES ('2', LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon2.png'));
+INSERT INTO items (item_code, item_name, price, image_data) 
+VALUES (2,'stupid icon', 100, LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon2.png'));
+INSERT INTO icons (icon_code, icon_img) VALUES ('3', LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon3.png'));
+INSERT INTO items (item_code,item_name, price, image_data) 
+VALUES (3,'demon icon', 500, LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon3.png'));
+INSERT INTO icons (icon_code, icon_img) VALUES ('4', LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon4.png'));
+INSERT INTO items (item_code, item_name, price, image_data) 
+VALUES (4, 'rainbow icon', 1000, LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\icon4.png'));
+INSERT INTO items (item_code, item_name, price, image_data) 
+VALUES (777, 'premium subscribe', 10000, LOAD_FILE('C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\premium.png'));
+select * from items;
+
+
+
+select * from rooms;
+
+CREATE TABLE charge_requests (
+    request_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_code INT NOT NULL,
+    depositor_name VARCHAR(50) NOT NULL,
+    amount INT NOT NULL,
+    request_time DATETIME DEFAULT NOW(),
+    status VARCHAR(20) DEFAULT 'pending',
+    FOREIGN KEY (user_code) REFERENCES users(user_code)
+);
+
+
+
+
+
+
+
+SELECT icons.icon_code, icons.icon_img FROM user_items JOIN items ON user_items.item_code = items.item_code JOIN icons ON items.icon_code = icons.icon_code WHERE user_items.user_code = 4;
