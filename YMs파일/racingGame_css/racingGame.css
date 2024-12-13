@@ -1,0 +1,76 @@
+/* racingGame.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background: gray;
+    margin: 0;
+    padding: 0;
+}
+
+#game-container {
+    width: 80%;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 50px;
+    border : 2px solid black;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#status-bar {
+    text-align: right;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#game-content {
+    text-align: center;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.PageReturn {
+    margin-top: 20px;
+}
+
+.PageReturn a {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #ccc;
+    border-radius: 5px;
+    color: #333;
+    text-decoration: none;
+}
+
+.PageReturn a:hover {
+    background: #bbb;
+}
+
+#video-container {
+    margin-top: 20px;
+    background-color : black;
+}
+
+#result-text {
+    margin-top: 20px;
+    font-size: 18px;
+}

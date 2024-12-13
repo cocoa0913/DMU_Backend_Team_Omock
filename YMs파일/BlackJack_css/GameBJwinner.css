@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: gray;
+    padding: 0;
+}
+.ReturnBox {
+	display : flex;
+	width : 235px;
+	justify-content: space-between;
+}
+
+.PageReturn a {
+	display: inline-block;
+	margin: 20px 0;
+	padding: 10px 15px;
+	background-color: #4CAF50;
+	color: white;
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+.PageReturn a:hover {
+	background-color: #45a049;
+}
+
+.endBox {
+	display : inline;
+	padding : 10px;
+	border : 1px solid black;
+	color : red;
+}
+
+
+.GameBox {
+	left : 100px;
+	top : 50px;
+	width : 500px;
+	background-color : white;
+	border : 3px solid;
+    display : inline-block;
+    padding: 30px;
+    position : absolute;
+    
+}
+
+strong {
+	color : red;
+}
+
+li {
+	list-style : none;
+}
+
+img {
+	width : 15px;
+	height : 15px;
+}
+
+h4 {
+	padding-left : 10px;
+}

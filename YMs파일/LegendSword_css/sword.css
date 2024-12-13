@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: gray;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+.PageReturn a {
+    display: inline-block;
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.PageReturn a:hover {
+    background-color: #45a049;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin: 50px 0 10px;
+}
+
+h4 {
+	color : red;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+table {
+    width: 87%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+input[type="submit"] {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* .success-message를 페이지의 맨 아래로 이동 */
+.success-message {
+    margin-top: auto; /* 이 부분이 중요: 내용을 다 채우고, 마지막에 이 영역을 배치 */
+    text-align: center;
+    padding: 10px;
+    color: green;
+}
+
+/* sword.css */
+
+/* 버튼을 담고 있는 컨테이너의 스타일 */
+.button-container {
+    display: flex;
+    justify-content: space-between;  /* 양 옆으로 배치 */
+    width: 200px;  /* 버튼들이 배치될 공간의 너비 */
+    margin: 20px auto;  /* 페이지 가운데 정렬 */
+}
+
+/* 각 버튼 스타일 (선택사항) */
+input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;  /* 녹색 배경 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;  /* 호버 시 배경색 변경 */
+}
+
+.GameBox {
+	margin-top : 100px;
+	width : 500px;
+	height : 700px;
+	background-color : #fff;
+	border : 2px solid black;
+	text-align: center;
+}
